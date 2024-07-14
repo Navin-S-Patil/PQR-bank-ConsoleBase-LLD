@@ -1,5 +1,6 @@
 package com.oracle.services;
 
+import com.oracle.Entity.Account;
 import com.oracle.Entity.Customer;
 import java.util.Date;
 import java.util.Optional;
@@ -10,4 +11,5 @@ public interface CustomerService {
     Customer getCustomerById(Long id);
     boolean verifyCustomerPassword(Long customerId, String password);
     Optional<Customer> CustomerLogin(String email, String password);
+
 }

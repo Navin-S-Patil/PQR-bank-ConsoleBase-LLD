@@ -1,5 +1,6 @@
 package com.oracle.repository;
 
+import com.oracle.Entity.Account;
 import com.oracle.Entity.Customer;
 
 import java.util.Optional;

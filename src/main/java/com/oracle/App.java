@@ -10,7 +10,6 @@ import com.oracle.services.impl.CustomerServiceImpl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class App {
@@ -18,7 +17,8 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         CustomerServiceImpl customerService = new CustomerServiceImpl();
-        AccountController accountController = new AccountController(new AccountServiceImpl(), customerService);
+        AccountServiceImpl accountService = new AccountServiceImpl();
+        AccountController accountController = new AccountController(accountService, customerService);
         CustomerController customerController = new CustomerController(customerService);
 
         while (running) {
@@ -34,69 +34,13 @@ public class App {
 
             switch (choice) {
                 case 1:
-                    System.out.println("You selected new Customers");
-                    System.out.println("Please enter all your details");
-
-                    System.out.print("First Name: ");
-                    String firstName = scanner.nextLine();
-
-                    System.out.print("Last Name: ");
-                    String lastName = scanner.nextLine();
-
-                    System.out.print("Email: ");
-                    String email = scanner.nextLine();
-
-                    System.out.print("Phone: ");
-                    String phone = scanner.nextLine();
-
-                    System.out.print("Address: ");
-                    String address = scanner.nextLine();
-
-                    Date dob = null;
-                    while (dob == null) {
-                        System.out.print("Date of Birth (DDMMYYYY): ");
-                        String dateOfBirth = scanner.nextLine();
-
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
-                        dateFormat.setLenient(false);
-                        try {
-                            dob = dateFormat.parse(dateOfBirth);
-                        } catch (ParseException e) {
-                            System.out.println("Invalid date format. Please enter the date in DDMMYYYY format.");
-                        }
-                    }
-
-                    System.out.print("Password: ");
-                    String password = scanner.nextLine();
-
-
-
-                    customerController.createCustomer(firstName,lastName,email,phone,address,dob,password);
-
+                    registerNewCustomer(scanner, customerController);
                     break;
                 case 2:
-                    System.out.println("You selected Create New Account");
-                    System.out.print("Enter customer ID: ");
-                    Long customerId = scanner.nextLong();
-                    scanner.nextLine(); // Consume newline
-
-                    System.out.print("Enter password: ");
-                    String password2 = scanner.nextLine();
-
-                    System.out.print("Enter account type (SAVINGS/CHECKING): ");
-                    String accountType = scanner.nextLine().toUpperCase();
-
-                    if (!accountType.equals("SAVINGS") && !accountType.equals("CHECKING")) {
-                        System.out.println("Invalid account type");
-                        break;
-                    }
-
-                    accountController.createAccount(customerId, accountType, password2);
+                    createNewAccount(scanner, accountController);
                     break;
                 case 3:
-                    System.out.println("You selected Login");
-                    LoginModule.Login(scanner, customerController);
-
+                    LoginModule.Login(scanner, customerController, accountController);
                     break;
                 case 4:
                     System.out.println("Exiting the application. Goodbye!");
@@ -110,5 +54,62 @@ public class App {
         scanner.close();
     }
 
+    private static void registerNewCustomer(Scanner scanner, CustomerController customerController) {
+        System.out.println("You selected new Customers");
+        System.out.println("Please enter all your details");
 
+        System.out.print("First Name: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Last Name: ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Phone: ");
+        String phone = scanner.nextLine();
+
+        System.out.print("Address: ");
+        String address = scanner.nextLine();
+
+        Date dob = null;
+        while (dob == null) {
+            System.out.print("Date of Birth (DDMMYYYY): ");
+            String dateOfBirth = scanner.nextLine();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+            dateFormat.setLenient(false);
+            try {
+                dob = dateFormat.parse(dateOfBirth);
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please enter the date in DDMMYYYY format.");
+            }
+        }
+
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        customerController.createCustomer(firstName, lastName, email, phone, address, dob, password);
+    }
+
+    private static void createNewAccount(Scanner scanner, AccountController accountController) {
+        System.out.println("You selected Create New Account");
+        System.out.print("Enter customer ID: ");
+        Long customerId = scanner.nextLong();
+        scanner.nextLine(); // Consume newline
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Enter account type (SAVINGS/CHECKING): ");
+        String accountType = scanner.nextLine().toUpperCase();
+
+        if (!accountType.equals("SAVINGS") && !accountType.equals("CHECKING")) {
+            System.out.println("Invalid account type");
+            return;
+        }
+
+        accountController.createAccount(customerId, accountType, password);
+    }
 }

@@ -1,9 +1,12 @@
 package com.oracle.controller;
 
 import com.oracle.Entity.Account;
+import com.oracle.Entity.Customer;
+import com.oracle.Entity.Transaction;
 import com.oracle.services.AccountService;
 import com.oracle.services.CustomerService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class AccountController {
@@ -28,5 +31,29 @@ public class AccountController {
         } else {
             System.out.println("Failed to create account");
         }
+    }
+
+    public Optional<List<Account>> getBalance(Customer customer){
+        return accountService.getBalance(customer);
+    }
+
+    public boolean deposit(String accountNumber, double amount, String description) {
+        return accountService.deposit(accountNumber, amount, description);
+    }
+
+    public List<Transaction> getTransactionHistory(String accountNumber) {
+        return accountService.getTransactionHistory(accountNumber);
+    }
+
+    public Optional<List<Account>> getAccounts(Customer customer){
+        return accountService.getAccounts(customer);
+    }
+
+    public boolean withdraw(String accountNumber, double amount, String description){
+        return accountService.withdraw(accountNumber,amount,description);
+    }
+
+    public boolean transfer(String accountNumber, double amount, String beneficiaryAccountNumber, String beneficiaryAccountType, String description){
+        return accountService.transfer(accountNumber,amount,beneficiaryAccountNumber,beneficiaryAccountType,description);
     }
 }

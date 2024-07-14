@@ -1,5 +1,6 @@
 package com.oracle.controller;
 
+import com.oracle.Entity.Account;
 import com.oracle.Entity.Customer;
 import com.oracle.services.CustomerService;
 
@@ -26,4 +27,6 @@ public class CustomerController {
     public Optional<Customer> customerLogin(String email, String password){
         return customerService.CustomerLogin(email,password);
     }
+
+
 }

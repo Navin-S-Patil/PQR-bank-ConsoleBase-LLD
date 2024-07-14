@@ -20,6 +20,15 @@ public class Account {
         this.openingDate = new Date();
     }
 
+    public Account(String accountNo, Long customerId, String accountType, double balance, Date openingDate, String status) {
+        this.accountNo = accountNo;
+        this.customerId = customerId;
+        this.accountType = accountType;
+        this.balance = balance;
+        this.openingDate = openingDate;
+        this.status = status;
+    }
+
     private String generateAccountNumber() {
         Random random = new Random();
         StringBuilder accountNumber = new StringBuilder();
@@ -67,14 +76,7 @@ public class Account {
         this.status = status;
     }
 
-    public Account(String accountNo, Long customerId, String accountType, double balance, Date openingDate, String status) {
-        this.accountNo = accountNo;
-        this.customerId = customerId;
-        this.accountType = accountType;
-        this.balance = balance;
-        this.openingDate = openingDate;
-        this.status = status;
-    }
+
 
     @Override
     public String toString() {

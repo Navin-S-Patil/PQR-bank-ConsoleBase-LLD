@@ -1,12 +1,12 @@
 package com.oracle.repository.impl;
 
+import com.oracle.Entity.Account;
 import com.oracle.Entity.Customer;
 import com.oracle.repository.CustomerRepository;
 import com.oracle.util.DatabaseConnection;
 
 import java.sql.*;
 import java.util.Optional;
-import java.util.function.Function;
 
 public class JdbcCustomerRepository implements CustomerRepository {
 
@@ -84,7 +84,7 @@ public class JdbcCustomerRepository implements CustomerRepository {
                         customer.setPhone(rs.getString("phone"));
                         customer.setAddress(rs.getString("address"));
                         customer.setDob(rs.getDate("dob"));
-//                        customer.setPassword(rs.getString("password"));
+                        customer.setPassword(rs.getString("password"));
                     }
                 }
 
@@ -130,5 +130,7 @@ public class JdbcCustomerRepository implements CustomerRepository {
             return Optional.empty();
         });
     }
+
+
 
 }
