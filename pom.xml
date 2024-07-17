@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.bankingProject</groupId>
-  <artifactId>bank</artifactId>
+  <artifactId>PQR-Bank_ConsoleBase(LLD)</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
@@ -26,12 +26,6 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.33</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mindrot.bcrypt</groupId>
-      <artifactId>bcrypt</artifactId>
-      <version>0.3</version>
     </dependency>
 
 

@@ -14,7 +14,8 @@ import java.util.Scanner;
 
 public class LoginModule {
 
-    public static void Login(Scanner scanner, CustomerController customerController, AccountController accountController) {
+    public static void Login(Scanner scanner, CustomerController customerController,
+            AccountController accountController) {
         boolean running = true;
 
         while (running) {
@@ -50,7 +51,8 @@ public class LoginModule {
         }
     }
 
-    private static void customerLogin(Scanner scanner, CustomerController customerController, AccountController accountController) {
+    private static void customerLogin(Scanner scanner, CustomerController customerController,
+            AccountController accountController) {
         System.out.print("Enter Registered Email: ");
         String email = scanner.nextLine();
         System.out.print("Enter Password: ");
@@ -115,7 +117,8 @@ public class LoginModule {
             if (accounts.isEmpty()) {
                 System.out.println("No accounts found for this customer.");
             } else {
-                System.out.println("Account balances for " + customer.getFirstName() + " " + customer.getLastName() + ":");
+                System.out.println(
+                        "Account balances for " + customer.getFirstName() + " " + customer.getLastName() + ":");
                 for (Account account : accounts) {
                     System.out.printf("Account No: %s, Type: %s, Balance: $%.2f%n",
                             account.getAccountNo(),
@@ -162,10 +165,12 @@ public class LoginModule {
                             System.out.print("Enter a description for this deposit: ");
                             String description = scanner.nextLine();
 
-                            boolean success = accountController.deposit(selectedAccount.getAccountNo(), amount, description);
+                            boolean success = accountController.deposit(selectedAccount.getAccountNo(), amount,
+                                    description);
 
                             if (success) {
-                                System.out.printf("Successfully deposited $%.2f to account %s%n", amount, selectedAccount.getAccountNo());
+                                System.out.printf("Successfully deposited $%.2f to account %s%n", amount,
+                                        selectedAccount.getAccountNo());
                                 return; // Exit the method on successful deposit
                             } else {
                                 System.out.println("Deposit failed. Please try again.");
@@ -230,15 +235,17 @@ public class LoginModule {
                             System.out.print("Enter a description for this withdrawal: ");
                             String description = scanner.nextLine();
 
-//                            if(selectedAccount.getBalance() < amount){
-//                                System.out.println("Insufficient funds");
-//                                System.out.println("You don't have sufficient funds");
-//                                return; // Exit the method on insufficient funds
-//                            }
-                            boolean success = accountController.withdraw(selectedAccount.getAccountNo(), amount, description);
+                            // if(selectedAccount.getBalance() < amount){
+                            // System.out.println("Insufficient funds");
+                            // System.out.println("You don't have sufficient funds");
+                            // return; // Exit the method on insufficient funds
+                            // }
+                            boolean success = accountController.withdraw(selectedAccount.getAccountNo(), amount,
+                                    description);
 
                             if (success) {
-                                System.out.printf("Successfully withdrew $%.2f from account %s%n", amount, selectedAccount.getAccountNo());
+                                System.out.printf("Successfully withdrew $%.2f from account %s%n", amount,
+                                        selectedAccount.getAccountNo());
                                 return; // Exit the method on successful withdrawal
                             } else {
                                 System.out.println("Withdrawal failed. Please try again.");
@@ -310,7 +317,8 @@ public class LoginModule {
                             System.out.print("Enter a description for this transfer: ");
                             String description = scanner.nextLine();
 
-                            boolean success = accountController.transfer(selectedAccount.getAccountNo(), amount, beneficiaryAccountNumber, beneficiaryAccountType, description);
+                            boolean success = accountController.transfer(selectedAccount.getAccountNo(), amount,
+                                    beneficiaryAccountNumber, beneficiaryAccountType, description);
 
                             if (success) {
                                 System.out.printf("Successfully transferred $%.2f from account %s to account %s%n",
@@ -345,7 +353,8 @@ public class LoginModule {
         System.out.println("Maximum attempts reached. Returning to the main menu.");
     }
 
-    private static void viewTransactionHistory(Scanner scanner, Customer customer, AccountController accountController) {
+    private static void viewTransactionHistory(Scanner scanner, Customer customer,
+            AccountController accountController) {
         // Implement view transaction history logic
         int attempts = 0;
         final int MAX_ATTEMPTS = 3;
@@ -372,14 +381,18 @@ public class LoginModule {
                     if (accountChoice > 0 && accountChoice <= accounts.size()) {
                         Account selectedAccount = accounts.get(accountChoice - 1);
 
-                        List<Transaction> success = accountController.getTransactionHistory(selectedAccount.getAccountNo());
+                        List<Transaction> success = accountController
+                                .getTransactionHistory(selectedAccount.getAccountNo());
 
                         if (!success.isEmpty()) {
-                            System.out.println("\nTransaction History for Account No: " + selectedAccount.getAccountNo());
-                            System.out.println("--------------------------------------------------------------------------------------------------------");
+                            System.out
+                                    .println("\nTransaction History for Account No: " + selectedAccount.getAccountNo());
+                            System.out.println(
+                                    "--------------------------------------------------------------------------------------------------------");
                             System.out.printf("%-10s | %-23s | %-15s | %-35s | %-10s%n",
                                     "Trans ID", "Date", "Amount", "Description", "Type");
-                            System.out.println("--------------------------------------------------------------------------------------------------------");
+                            System.out.println(
+                                    "--------------------------------------------------------------------------------------------------------");
 
                             for (Transaction transaction : success) {
                                 System.out.printf("%-10d | %-23s | $%-14.2f | %-35s | %-10s%n",
@@ -389,7 +402,8 @@ public class LoginModule {
                                         truncateString(transaction.getDescription(), 35),
                                         transaction.getTransactionType());
                             }
-                            System.out.println("--------------------------------------------------------------------------------------------------------");
+                            System.out.println(
+                                    "--------------------------------------------------------------------------------------------------------");
                             return; // Exit the method after displaying transactions
                         } else {
                             System.out.println("No transactions found for this account.");
